@@ -1,5 +1,5 @@
 $fn = $preview ? 32 : 256;
-$loop = (-cos($t*360)+1)/2;
+$loop = ((-cos($t*360)+1)/2)^2;
 $tol = 0.02;
 
 
@@ -56,9 +56,34 @@ for (i = [0:2]) {
 color("red") translate ([(20-1)/2,t(20-1),0]) render(4) rotate([180,0,240]) scale([1,1,-1]) thing(0.5, 20);
 }
 
-rotate([0,0,60]) triangle(10);
-
 function lel(a, ang) = a/sin(60)*sin(ang);
 
-translate([lel(10, 60*$loop),0,0]) rotate([0,0,60*$loop]) triangle(10);
-translate([lel(10, 60*$loop),0,0]) rotate([0,0,-60-60*$loop])triangle(10);
+module what(a=10, x=1) {
+    inner = sqrt((a-x)^2+x^2-2*(a-x)*x*cos(60));
+    ang = asin(x*sin(60)/inner);
+    triangle(a);
+    translate([1,0,0]) circle(1);
+    color("red")
+        rotate([0,0,ang])
+        translate([x,0,0])
+        triangle(inner);
+}
+
+echo("-----------START------------");
+{
+for (i=[0:2]) rotate([0,0,120*i]) {
+    a = 10;
+    x = 1;
+    inner = sqrt((a-x)^2+x^2-2*(a-x)*x*cos(60));
+    ang = asin(x*sin(60)/inner);
+
+    {
+    translate([lel(inner, 60*$loop),0,0])
+        rotate_around([1,0,0], [0,0,60*$loop])
+        what(a,x);
+    translate([lel(inner, 60*$loop),0,0])
+        rotate_around([1,0,0],[180,0,-60*$loop])
+        what(a, x);
+    }
+}
+}
