@@ -2,6 +2,8 @@ $fn = $preview ? 32 : 256;
 $loop = ((-cos($t*360)+1)/2)^2;
 $tol = 0.03;
 
+$peg = 2.5;
+
 module comment() {}
 
 module rotate_around(pt,ang) {
@@ -23,8 +25,8 @@ module base(a) {
             triangle(a);
             for (i = [0:2]) {
                 rotate([0,0,-90+120*i])
-                translate([a-1,0,0]-centre)
-                circle(1);
+                translate([a-$peg,0,0]-centre)
+                circle($peg);
             }
         }
         triangle(a*2/3);
@@ -32,8 +34,8 @@ module base(a) {
             rotate([0,0,-90+120*i])
             translate(-centre)
             rotate([0,0,-240])
-            translate([-1,0,0])
-            circle(1+$tol);
+            translate([-$peg,0,0])
+            circle($peg+$tol);
         }
     }
 }
@@ -48,10 +50,10 @@ module thing_peg(a,th=1) {
             translate([0,0,th/2-$tol/2])
             linear_extrude(th/2+$tol)
             rotate([0,0,-90+120*i])
-            translate([a-1,0,0]-centre)
+            translate([a-$peg,0,0]-centre)
             difference() {
-                circle(1+$tol);
-                circle(0.5);
+                circle($peg+$tol);
+                circle($peg/2);
             }
         }
     }
@@ -65,18 +67,18 @@ module thing_hole(a,th=1) {
             base(a);
             for (i = [0:2]) {
                 rotate([0,0,-90+120*i])
-                translate([a-1,0,0]-centre)
-                circle(0.5+$tol);
+                translate([a-$peg,0,0]-centre)
+                circle($peg/2+$tol);
             }
         }
         for (i = [0:2]) {
             translate([0,0,th/2-$tol/2])
             rotate([0,0,-90+120*i])
-            translate([a-1,0,0]-centre)
+            translate([a-$peg,0,0]-centre)
             linear_extrude(th/2+$tol)
             difference() {
-                circle(1+$tol);
-                circle(0.5);
+                circle($peg+$tol);
+                circle($peg/2);
             }
         }
     }
@@ -84,9 +86,10 @@ module thing_hole(a,th=1) {
 
 
 $a = 20;
+$th = 2;
 
-translate([10+20/sqrt(3),0,0])
-color("#966") render(4) thing_peg($a);
+translate([10+$a/sqrt(3),0,0])
+color("#966") render(4) thing_peg($a, $th);
 
-// translate([10,0,1]) rotate([180,0,60])
-color("#669") render(4) thing_hole($a);
+translate([10,0,$th]) rotate([180,0,60])
+color("#669") render(4) thing_hole($a, $th);
