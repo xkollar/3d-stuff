@@ -42,7 +42,8 @@ module stand() {
 }
 
 n=5;
-space = 25;
+space_w = 25;
+space_h = 35;
 
 module rrect(x,y,r) {
     translate([r,r])
@@ -55,13 +56,21 @@ module rrect(x,y,r) {
 }
 
 linear_extrude(2)
-rrect(space*n, space, 2);
+rrect(space_w*n, space_h, 2);
 
-translate([space/2,space/2,2])
+translate([space_w/2,space_h/2,2])
 for ( i = [0:n-1] ) {
-    translate([i*space,0,0])
-    rotate([0,0,30])
-    stand();
+    translate([i*space_w,0,0]) {
+        translate([0,0,1])
+        rotate([0,0,20])
+        stand();
+        difference() {
+            cylinder(h=1, d1=14, d2=12);
+            translate([-0.5,0,0])
+            cube([1,7,2]);
+        }
+        cylinder(h=1, d1=14, d2=8);
+    }
 }
 
 //function t(n=1) = 0.5+sin(n*360*$t)/2;
