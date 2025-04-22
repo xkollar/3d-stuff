@@ -65,11 +65,11 @@ for ( i = [0:n-1] ) {
         rotate([0,0,20])
         stand();
         difference() {
-            cylinder(h=1, d1=14, d2=12);
+            cylinder(h=1, d1=16, d2=14);
             translate([-0.5,0,0])
-            cube([1,7,2]);
+            cube([1,8,2]);
         }
-        cylinder(h=1, d1=14, d2=8);
+        cylinder(h=1, d1=16, d2=8);
     }
 }
 
