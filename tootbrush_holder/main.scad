@@ -12,9 +12,6 @@ module stand() {
         }
     }
 
-
-
-
     let (
         d1 = 7.6,
         d2 = 7.5,
@@ -36,12 +33,12 @@ module stand() {
         }
         // circle(d = 4);
         translate([w1/2,0])
-        rotate([0,0,30])
-        square([1.2,2.2]);
+        rotate([0,0,45])
+        square([2,2]);
     }
 }
 
-n=5;
+n=1;
 space_w = 25;
 space_h = 35;
 
