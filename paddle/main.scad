@@ -1,5 +1,7 @@
 $fn = $preview ? 32 : 128;
 
+thickness=3;
+
 module rrect(x,y,r) {
     translate([r,r])
     hull()
@@ -27,7 +29,7 @@ module xoff(o) {
 
 translate([0,50,0])
 let (w=68, h=33, hw=50, hh=20, r=5, o=1.5) {
-    linear_extrude(3)
+    linear_extrude(thickness)
     difference() {
         paddle(w,h,hw,hh,r);
         translate([w/2+2, 0, 0])
@@ -38,9 +40,9 @@ let (w=68, h=33, hw=50, hh=20, r=5, o=1.5) {
 
 let (w=68, h=33, hw=50, hh=20, r=5, o=1.5) {
     translate([0,0,1.5])
-    linear_extrude(1.5)
+    linear_extrude(thickness/2)
     paddle(w,h,hw,hh,r);
-    linear_extrude(3)
+    linear_extrude(thickness)
     difference() {
         paddle(w,h,hw,hh,r);
         translate([w/2+2, 0, 0])
